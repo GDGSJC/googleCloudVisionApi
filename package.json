@@ -9,8 +9,11 @@
   },
   "author": "Fred Peixoto",
   "license": "ISC",
-  "dependencies" : {
-    "express"    : "~4.7.2"
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "base64js": "^1.0.1",
+    "express": "~4.7.2",
+    "express-fileupload": "^0.3.0",
+    "file-base64": "^1.0.0"
   }
-
 }
