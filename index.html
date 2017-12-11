@@ -29,15 +29,16 @@
     <div class="container">
         <div ng-controller='fotoController'>
             <form class="form-control" method="post">
-                <select name="tipo" id="tipo" class="form-control" ng-model="gdg.valueTipo">
+                <select name="tipo" id="tipo" class="form-control" ng-model="gdg.valueTipo" required>
                     <option ng-repeat="item in gdg.tipo">{{item}}</option>
                 </select>
-                <input class="form-control" type="file" name="selecionaArquivo" id="selecionaArquivo" />
+                <input class="form-control" type="file" name="selecionaArquivo" id="selecionaArquivo"
+                 ng-model="gdg.file"  onchange="angular.element(this).scope().convertBase64()"/>
                 <input class="form-control" placeholder="Digite A URL da imagem" type="url" ng-model="gdg.url" />
                 <button class="form-control" type="submit" ng-click="enviaPhoto()">ENVIAR</button>
                 <button class="form-control" type="reset">LIMPAR</button>
             </form>
-            <img ng-src="{{urlDisplay}}" alt="{{altUrl}}" />
+            <img src="data:image/jpeg:base64, {{gdg.base64.binary}}"  alt="{{gdg.altUrl}}" />
         </div>
     </div>
 </body>

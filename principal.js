@@ -4,19 +4,25 @@ myApp.controller("fotoController", function ($scope, $http) {
 
   var url = 'https://vision.googleapis.com/v1/images:annotate?key=', key = 'AIzaSyDhsFgqjxXhMI6XFP6bgSmwogGI_e3AjuI';
   var urlApi = url + key, gdg = {};
-  $scope.gdg =  { tipo : [
-    'TYPE_UNSPECIFIED',
-    'FACE_DETECTION',
-    'LANDMARK_DETECTION',
-    'LOGO_DETECTION',
-    'LABEL_DETECTION',
-    'TEXT_DETECTION',
-    'DOCUMENT_TEXT_DETECTION',
-    'SAFE_SEARCH_DETECTION',
-    'IMAGE_PROPERTIES',
-    'CROP_HINTS',
-    'WEB_DETECTION'
-  ]};
+  $scope.gdg = {
+    tipo: [ 
+      'TYPE_UNSPECIFIED',
+      'FACE_DETECTION',
+      'LANDMARK_DETECTION',
+      'LOGO_DETECTION',
+      'LABEL_DETECTION',
+      'TEXT_DETECTION',
+      'DOCUMENT_TEXT_DETECTION',
+      'SAFE_SEARCH_DETECTION',
+      'IMAGE_PROPERTIES',
+      'CROP_HINTS',
+      'WEB_DETECTION'
+    ],
+    urlDisplay : '',
+    base64 : {
+      binary : null
+    }
+  };
 
 
   var sendUrl = function (url, type, maxResults) {
@@ -57,33 +63,32 @@ myApp.controller("fotoController", function ($scope, $http) {
     }
   }
 
+  $scope.convertBase64 = function () {
+    var arquivo = document.getElementById('selecionaArquivo').files[0];
+    var reader = new FileReader();
+    reader.readAsBinaryString(arquivo);
+    reader.onload = function () {
+      ($scope.gdg.base64.binary = btoa(reader.result));
+    };
+  };
+
 
   $scope.enviaPhoto = function () {
 
-    var arquivo = document.getElementById('selecionaArquivo').files[0];
-    var base64 = {
-      binary: ''
-    };
-    var reader = new FileReader();
-
-    reader.readAsBinaryString(arquivo);
-
-    reader.onload = function () {
-      base64.binary = (btoa(reader.result));
-      console.warn("start");
-    };
-
-    console.log(base64.binary);
     console.log($scope.gdg);
 
-    var enviado = sendUrl($scope.gdg.url, $scope.gdg.valueTipo, 2);
+    if ($scope.gdg.url == null || $scope.gdg.url == '' ) {
+      var enviado = sendBase64($scope.gdg.base64.binary, $scope.gdg.valueTipo, 2);
+    } else {
+      var enviado = sendUrl($scope.gdg.url, $scope.gdg.valueTipo, 2);
+    }
 
     $http.post(urlApi,
       enviado, {
         headers: { 'Content-Type': undefined }
       }
-    ).then(function (res) { 
-      console.log( res);
+    ).then(function (res) {
+      console.log(res.data.responses);
     })
   };
 
