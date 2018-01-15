@@ -7,7 +7,7 @@ myApp.controller("fotoController", function ($scope, $http) {
   var gdg = {};
   $scope.gdg = {
     tipo: [
-      'TYPE_UNSPECIFIED',
+      //  'TYPE_UNSPECIFIED',
       'FACE_DETECTION',
       'LANDMARK_DETECTION',
       'LOGO_DETECTION',
@@ -76,6 +76,7 @@ myApp.controller("fotoController", function ($scope, $http) {
       ($scope.gdg.base64.binary = btoa(reader.result));
     }
     $scope.url = '';
+    $scope.gdg = $scope.gdg;
   };
 
 
@@ -92,7 +93,7 @@ myApp.controller("fotoController", function ($scope, $http) {
       $scope.gdg.showBase64= false;
       $scope.gdg.showUrl = true;
     }
-
+$scope.retornoJson ='';
     $http.post(urlApi,
       enviado, {
         headers: { 'Content-Type': undefined }
