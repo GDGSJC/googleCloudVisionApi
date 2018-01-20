@@ -76,6 +76,7 @@ myApp.controller("fotoController", function ($scope, $http) {
       ($scope.gdg.base64.binary = btoa(reader.result));
     }
     $scope.url = '';
+    $scope.gdg.url = null;
     $scope.gdg = $scope.gdg;
   };
 
@@ -85,7 +86,7 @@ myApp.controller("fotoController", function ($scope, $http) {
     console.log($scope.gdg);
 
     if ($scope.gdg.url == null || $scope.gdg.url == '') {
-      var enviado = sendBase64($scope.gdg.base64.binary, $scope.gdg.valueTipo, 2);
+      var enviado = sendBase64($scope.gdg.base64.binary, $scope.gdg.valueTipo, 10);
       $scope.gdg.showBase64= true;
       $scope.gdg.showUrl = false;
     } else {
